@@ -43,7 +43,7 @@ npm.cmd run seed --prefix server
 npm.cmd run dev
 ```
 
-Frontend: http://localhost:5175
+Frontend: http://localhost:5176
 
 Backend: http://localhost:5000
 
