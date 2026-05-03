@@ -21,7 +21,7 @@ export const Shell = () => {
   return (
     <div className="min-h-screen bg-slate-50">
       <aside className="fixed inset-x-0 top-0 z-20 border-b border-slate-200 bg-white/95 backdrop-blur lg:inset-y-0 lg:left-0 lg:right-auto lg:w-64 lg:border-b-0 lg:border-r">
-        <div className="flex h-16 items-center justify-between px-4 lg:h-full lg:flex-col lg:items-stretch lg:py-6">
+        <div className="flex h-[50vh] items-center justify-between px-4  lg:flex-col lg:items-stretch lg:py-6">
           <div className="flex items-center gap-3">
             <div className="grid h-10 w-10 place-items-center rounded bg-brand text-lg font-black text-white">
               Q

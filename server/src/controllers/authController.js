@@ -33,12 +33,25 @@ export const register = asyncHandler(async (req, res) => {
 export const login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
+  console.log("Entered:", email, password);
+
   if (!email || !password) {
     throw new ApiError(400, "Email and password are required");
   }
 
-  const user = await User.findOne({ email }).select("+password");
-  if (!user || !(await user.comparePassword(password))) {
+  const user = await User.findOne({ email: email.trim() }).select("+password");
+
+  console.log("User:", user);
+
+  if (!user) {
+    throw new ApiError(401, "User not found");
+  }
+
+  const isMatch = await user.comparePassword(password.trim());
+
+  console.log("Match:", isMatch);
+
+  if (!isMatch) {
     throw new ApiError(401, "Invalid email or password");
   }
 
