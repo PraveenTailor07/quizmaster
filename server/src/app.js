@@ -33,7 +33,7 @@ export const createApp = () => {
   );
 
   // 🔥 FRONTEND SERVE (IMPORTANT)
-  app.use(express.static("client/dist"));
+  app.use(express.static("../../client/dist"));
 
   // API routes
   app.get("/health", (_req, res) => res.json({ status: "ok", app: "QuizMaster" }));
@@ -45,7 +45,7 @@ export const createApp = () => {
 
   // fallback (React routing support)
   app.get("*", (req, res) => {
-    res.sendFile(path.resolve("client/dist/index.html"));
+    res.sendFile(path.resolve("../../client/dist/index.html"));
   });
 
   app.use(notFound);
