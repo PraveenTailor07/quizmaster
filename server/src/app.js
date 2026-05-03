@@ -4,6 +4,7 @@ import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import morgan from "morgan";
 import path from "path";
+import { fileURLToPath } from "url";
 
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
@@ -13,6 +14,9 @@ import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
 
 export const createApp = () => {
   const app = express();
+
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = path.dirname(__filename);
 
   app.use(helmet());
   app.use(
@@ -33,7 +37,7 @@ export const createApp = () => {
   );
 
   // 🔥 FRONTEND SERVE (IMPORTANT)
-  app.use(express.static("../../client/dist"));
+  app.use(express.static(path.join(__dirname, "../../client/dist")));
 
   // API routes
   app.get("/health", (_req, res) => res.json({ status: "ok", app: "QuizMaster" }));
@@ -45,8 +49,8 @@ export const createApp = () => {
 
   // fallback (React routing support)
   app.get("*", (req, res) => {
-    res.sendFile(path.resolve("../../client/dist/index.html"));
-  });
+  res.sendFile(path.join(__dirname, "../../client/dist/index.html"));
+});
 
   app.use(notFound);
   app.use(errorHandler);
