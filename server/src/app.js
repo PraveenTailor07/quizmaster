@@ -3,6 +3,8 @@ import express from "express";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import morgan from "morgan";
+import path from "path";
+
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import quizRoutes from "./routes/quizRoutes.js";
@@ -30,12 +32,21 @@ export const createApp = () => {
     })
   );
 
+  // 🔥 FRONTEND SERVE (IMPORTANT)
+  app.use(express.static("client/dist"));
+
+  // API routes
   app.get("/health", (_req, res) => res.json({ status: "ok", app: "QuizMaster" }));
   app.use("/auth", authRoutes);
   app.use("/user", userRoutes);
   app.use("/quizzes", quizRoutes);
   app.use("/quiz", quizRoutes);
   app.use("/admin", adminRoutes);
+
+  // fallback (React routing support)
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve("client/dist/index.html"));
+  });
 
   app.use(notFound);
   app.use(errorHandler);
